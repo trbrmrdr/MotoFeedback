@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mServices.AddIMotionListener(mIMotionListener);
         mServices.AddILocationChanged(mILocationChanged);
         mServices.AddIChangeState(mIChangeState);
-        //CallReceiver.findMethod(this);
+        CallReceiver.findMethod(this);
     }
 
     @Override
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         SMSReceiver.sendSMS(this, mApplication.getSettings().getPhoneServer(), "тест сообщения");
     }
 
-    public void CallPhone(View view) {
+    public void ConnectToDevice(View view) {
         //CallReceiver.call(me.motofeedback.mApplication.getSettings().getPhoneClient());
         CallReceiver.callToPhone(this);
     }

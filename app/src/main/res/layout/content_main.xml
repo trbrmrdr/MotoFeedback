@@ -31,13 +31,12 @@
 
                 android:text="Connect" />
 
-            <ToggleButton
+            <Button
                 android:layout_marginLeft="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="ConnectToDevice"
-                android:textOff="isOff"
-                android:textOn="isOn" />
+                android:text="Connect To Device"/>
         </LinearLayout>
 
         <TextView

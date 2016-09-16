@@ -124,7 +124,7 @@ public class mServices extends Service {
             mBluetooth.setICommunicatorState(mICommunicatorState);
             mBluetooth.setIChangeState(mIChangeState);
         } catch (Error e) {
-            //ToDo неподдерживаемуе устройства
+            //ToDo неподдерживаемые устройства
         }
         //#######################
         CheckBluetooth();

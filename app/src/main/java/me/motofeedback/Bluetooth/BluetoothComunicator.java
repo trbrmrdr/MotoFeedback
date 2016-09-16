@@ -22,6 +22,7 @@ import me.motofeedback.Helper.TLog;
  */
 public class BluetoothComunicator {
 
+    //ToDo add in settings
     private final long LISTEN_DELAY = 1000 * 10;
 
     public interface ICommunicatorState {

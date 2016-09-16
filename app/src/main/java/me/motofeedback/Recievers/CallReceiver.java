@@ -11,6 +11,9 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import me.motofeedback.mApplication;
+import me.motofeedback.mServices;
+
 /**
  * Created by trbrmrdr on 29/07/16.
  */
@@ -69,7 +72,11 @@ public class CallReceiver extends BroadcastReceiver {
                 //    return;
                 //me.motofeedback.mServices.StartServices(context);
                 if (me.motofeedback.mApplication.getSettings().isClient()) {
-                    endCall();
+                    endCall(context);
+                    String serverPhone = mApplication.getSettings().getPhoneServer();
+                    if (0 == phoneNumber.compareTo(serverPhone)) {
+                        mServices.EnableBluetooth(null, true);
+                    }
                 }
             } else if (phone_state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
                 msg = "телефон в режиме звонка (набор номера / разговор)";
@@ -84,12 +91,34 @@ public class CallReceiver extends BroadcastReceiver {
         }
     }
 
+    //#######################################################
+
+    public static boolean endCall(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        try {
+            Class c = Class.forName(tm.getClass().getName());
+            Method mgetITelephony = c.getDeclaredMethod("getITelephony");
+            mgetITelephony.setAccessible(true);
+            Object TelephonyService = mgetITelephony.invoke(tm);
+            c = Class.forName(TelephonyService.getClass().getName());
+            Method endCall = c.getDeclaredMethod("endCall");
+            endCall.setAccessible(true);
+            endCall.invoke(TelephonyService);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    //#######################################################
+
 
     private static Object mTelephonyService;
     private static Method mendCall;
     private static Method mcall;
 
-    public static void endCall() {
+    public static void endCall_() {
         try {
             mendCall.invoke(mTelephonyService);
         } catch (Exception e) {
