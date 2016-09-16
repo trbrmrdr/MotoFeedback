@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView_settings"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewBType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeft2Col"
+                android:text="@string/textBType"
+                android:textSize="@dimen/settingSizeText" />
+
+            <ToggleButton
+                android:id="@+id/toggleBType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRight2Col"
+                android:textOff="Server"
+                android:textOn="Client" />
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- #####################################  srver group -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewLFLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeft2Col"
+                android:text="@string/textLFLocation"
+                android:textSize="@dimen/settingSizeText" />
+
+            <TextView
+                android:id="@+id/editTextLFLocation"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@string/settingRight2Col"
+                android:gravity="center"
+                android:lines="2"
+                android:text="0"
+                android:textSize="@dimen/settingSizeText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDFLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeft2Col"
+                android:text="@string/textDFLocation"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextDFLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRight2Col"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewSPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textSPeriod"
+                android:textSize="10pt" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:text="Max"
+                    android:textSize="@dimen/settingSizeText" />
+
+                <RadioGroup
+                    android:id="@+id/ChangeTypeSensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:text="0" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:text="1" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:text="2" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:text="3" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Min"
+                    android:textSize="@dimen/settingSizeText" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewXY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textXY"
+                android:textSize="10pt" />
+
+            <EditText
+                android:id="@+id/editTextXY"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textSize="10pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewXZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textXZ"
+                android:textSize="10pt" />
+
+            <EditText
+                android:id="@+id/editTextXZ"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textSize="10pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewZY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textZY"
+                android:textSize="10pt" />
+
+            <EditText
+                android:id="@+id/editTextZY"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textSize="10pt" />
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDR"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeftCol"
+                android:text="@string/textDR"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextDR"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRightCol"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textDTAlarm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeftCol"
+                android:text="@string/textDoubleTraicingAlaram"
+                android:textSize="@dimen/settingSizeText" />
+
+            <ToggleButton
+                android:id="@+id/toggleDTAlarm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRightCol" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/DoubleCheckGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewSDR"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="@string/settingLeftCol"
+                    android:text="@string/textSDR"
+                    android:textSize="@dimen/settingSizeText" />
+
+                <EditText
+                    android:id="@+id/editTextSDR"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@string/settingRightCol"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="0"
+                    android:textSize="@dimen/settingSizeText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewRDR"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="@string/settingLeftCol"
+                    android:text="@string/textRDR"
+                    android:textSize="@dimen/settingSizeText" />
+
+                <EditText
+                    android:id="@+id/editTextRDR"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@string/settingRightCol"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="0"
+                    android:textSize="@dimen/settingSizeText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewDIdle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="@string/settingLeftCol"
+                    android:lines="2"
+                    android:text="@string/textDIdle"
+                    android:textSize="@dimen/settingSizeText" />
+
+                <EditText
+                    android:id="@+id/editTextDIdle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@string/settingRightCol"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="0"
+                    android:textSize="@dimen/settingSizeText" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewMDCToUpdates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeftCol"
+                android:text="@string/textMDCToUpdates"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextMDCToUpdates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRightCol"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewMTEBUpdates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeftCol"
+                android:text="@string/textMTEBUpdates"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextMTEBUpdates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRightCol"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPhoneClient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeft2Col"
+                android:text="@string/textPhoneClient"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextPhoneClient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRight2Col"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="+79898989898"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewClientName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeft2Col"
+                android:text="@string/textServerName"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextClientName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRight2Col"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="testClient"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### ServerGroup -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewServerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeft2Col"
+                android:text="@string/textClientName"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextServerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRight2Col"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="testServer"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPhoneServer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="@string/settingLeft2Col"
+                android:text="@string/textPhoneServer"
+                android:textSize="@dimen/settingSizeText" />
+
+            <EditText
+                android:id="@+id/editTextPhoneServer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@string/settingRight2Col"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="+79898989898"
+                android:textSize="@dimen/settingSizeText" />
+        </LinearLayout>
+
+        <!-- ##################################### -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="2dp"
+            android:background="#ff000000" />
+
+        <!-- ##################################### -->
+
+    </LinearLayout>
+
+
+</ScrollView>

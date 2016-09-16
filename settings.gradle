@@ -1,0 +1,13 @@
+include ':app'
+
+include ':phoneApp'
+include ':phoneTestApp'
+return
+include ':testapplication'
+String pwd = getRootDir().absolutePath
+
+include "sample"
+project(":sample").projectDir = new File(pwd + '\\test\\android-fb-like-slideout-navigation\\sample')
+
+include "lib"
+project(":lib").projectDir = new File(pwd + '\\test\\android-fb-like-slideout-navigation\\lib')

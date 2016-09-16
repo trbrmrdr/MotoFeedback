@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Обратная связь</string>
+    <string name="settings_name">Натсроки</string>
+    <!-- #################### -->
+    <string name="textXY">z-XY</string>
+    <string name="textXZ">z-XZ</string>
+    <string name="textZY">z-ZY</string>
+    <!-- #################### -->
+
+    <string name="textLFLocation">Дата последнего определения GPS</string>
+    <string name="textDFLocation">Задержка обновления определения GPS (ч.)</string>
+
+    <string name="textSPeriod">Чувствительность сенсора</string>
+    <string name="textMDCToUpdates">Минимальная точность определения положения gps (м.)</string>
+    <string name="textMTEBUpdates">Интервал определения положения  (сек.)</string>
+    <string name="textPhoneClient">Следивший телефон</string>
+    <string name="textPhoneServer">Номер телефона приёмник</string>
+
+
+    <string name="textDoubleTraicingAlaram">Двойная проверка на движение</string>
+    <string name="textDR">Длительность первого измерения(сек.)</string>
+    <string name="textSDR">Длительность второго измерения(сек.)</string>
+    <string name="textRDR">Задержка перед тревогой(сек.)</string>
+    <string name="textDIdle">Задержка перед сбросом(сек.)</string>
+    <string name="textServerName">Имя сервера</string>
+    <string name="textClientName">Имя клиента</string>
+    <string name="textBType">Тип утсройства</string>
+
+    <string name="settingLeftCol">0.7</string>
+    <string name="settingRightCol">0.3</string>
+
+    <string name="settingLeft2Col">0.4</string>
+    <string name="settingRight2Col">0.6</string>
+
+    <string name="exitText">Нажать ещё раз back для выхода</string>
+
+</resources>
