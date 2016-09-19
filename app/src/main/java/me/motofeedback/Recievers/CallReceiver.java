@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import me.motofeedback.Settings;
 import me.motofeedback.mApplication;
 import me.motofeedback.mServices;
 
@@ -33,9 +34,16 @@ public class CallReceiver extends BroadcastReceiver {
         return sdf.format(resultdate);
     }
 
-    public static boolean callToPhone(Context context) {
+    public static boolean callToPhone() {
         //return callToPhone(context, me.motofeedback.mApplication.getSettings().getPhoneServer());
-        return callToPhone(context, me.motofeedback.mApplication.getSettings().getPhoneClient());
+        Context context = me.motofeedback.mApplication.getContext();
+        String phone = "";
+        Settings settings = me.motofeedback.mApplication.getSettings();
+        if (settings.isClient())
+            phone = settings.getPhoneServer();
+        else
+            phone = settings.getPhoneClient();
+        return callToPhone(context, phone);
     }
 
     public static boolean callToPhone(Context context, final String phone) {
@@ -60,34 +68,26 @@ public class CallReceiver extends BroadcastReceiver {
         if (action.equals(android.content.Intent.ACTION_NEW_OUTGOING_CALL)) {
             //получаем исходящий номер
             phoneNumber = intent.getExtras().getString(android.content.Intent.EXTRA_PHONE_NUMBER);
-            Log(getData() + " исходящий номер " + phoneNumber);
         } else if (action.equals("android.intent.action.PHONE_STATE")) {
             String phone_state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
-            String msg = "";
             if (phone_state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
                 //телефон звонит, получаем входящий номер
                 phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-                msg = " телефон звонит, входящий номер " + phoneNumber;
-                //if (me.motofeedback.mApplication.getSettings().isServer())
-                //    return;
-                //me.motofeedback.mServices.StartServices(context);
-                if (me.motofeedback.mApplication.getSettings().isClient()) {
+                Settings settings = me.motofeedback.mApplication.getSettings();
+                if (settings.isClient()) {
                     endCall(context);
+                    me.motofeedback.mServices.StartServices(context);
                     String serverPhone = mApplication.getSettings().getPhoneServer();
                     if (0 == phoneNumber.compareTo(serverPhone)) {
-                        mServices.EnableBluetooth(null, true);
+                        settings.setFastEnableMotion(true);
+                        mServices.EnableBluetooth(null, true, true);
                     }
                 }
             } else if (phone_state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
-                msg = "телефон в режиме звонка (набор номера / разговор)";
                 //телефон находится в режиме звонка (набор номера / разговор)
             } else if (phone_state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
                 //телефон находиться в ждущем режиме. Это событие наступает по окончанию разговора, когда мы уже знаем номер и факт звонка
-                msg = "знаем факт звонка и номер - окончание разговора";
             }
-            Log(getData() + " " + phone_state + " " + msg);
-        } else {
-            Log(getData() + " " + action);
         }
     }
 
@@ -135,7 +135,7 @@ public class CallReceiver extends BroadcastReceiver {
         //void call(String callingPackage, String number);
     }
 
-    public static boolean findMethod(final Context context) {
+    public static boolean findMethod_(final Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         try {
             Class c = Class.forName(tm.getClass().getName());

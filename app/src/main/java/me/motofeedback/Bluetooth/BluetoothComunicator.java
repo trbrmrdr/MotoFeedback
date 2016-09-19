@@ -40,6 +40,7 @@ public class BluetoothComunicator {
             CONNECT,
             START,
             STOP,
+            CONTROL_STOP,
             EROR
         }
 
@@ -85,6 +86,8 @@ public class BluetoothComunicator {
     private boolean mEnabledStart;
     private boolean mStartIfError;
     private boolean mNeededStart;
+
+    private boolean mControlDisconnect;
 
     private Activity mActivity = null;//only in Server
     private String mNameServer;
@@ -150,8 +153,12 @@ public class BluetoothComunicator {
                             break;
                     }
                     TLog.Log(this, nameState, false);
-                    if (isStop)
-                        stopAfterError();
+                    if (isStop) {
+                        if (mControlDisconnect)
+                            stopRemote();
+                        else
+                            stopAfterError();
+                    }
                     break;
                 case StateMessages.MESSAGE_SEND:
                     //String mw = (String) msg.obj;
@@ -162,7 +169,9 @@ public class BluetoothComunicator {
                     //String mr = new String(buffer, 0, msg.arg1);
                     String data = (String) msg.obj;
                     //TLog.Log(this, "message recieve: " + data, false);
-                    if (null != mICommunicatorState)
+                    if (0 == data.compareTo(StateMessages.MSG_CONTROL_DISCONNECT))
+                        mControlDisconnect = true;
+                    else if (null != mICommunicatorState)
                         mICommunicatorState.getsData(data);
                     break;
             }
@@ -170,16 +179,19 @@ public class BluetoothComunicator {
     };
 
 
+    public void start(final Activity activity, boolean startIfError, boolean force) {
+        if (force && mEnabledStart)
+            stop();
+        start(activity, startIfError);
+    }
+
     public void start(final Activity activity, boolean startIfError) {
         if (mEnabledStart) return;
         TLog.Log(this, "bt start", false);
         mEnabledStart = true;
         mActivity = activity;
         mStartIfError = startIfError;
-        start();
-    }
 
-    private void start() {
         sendChangeState(IChangeState.STATE_BTC.START);
         changeState(true, new Runnable() {
             @Override
@@ -208,6 +220,11 @@ public class BluetoothComunicator {
         sendChangeState(IChangeState.STATE_BTC.EROR);
         if (mStartIfError)
             mNeededStart = true;
+        stop();
+    }
+
+    private void stopRemote() {
+        sendChangeState(IChangeState.STATE_BTC.CONTROL_STOP);
         stop();
     }
 

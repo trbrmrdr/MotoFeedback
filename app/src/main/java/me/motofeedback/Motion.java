@@ -335,8 +335,8 @@ public class Motion {
         int retZY = rangeZY.getDif(rangeZY_old);
         int ret = retXY + retXZ + retZY;
         int tmp = retXY != 0 ? 1 : 0;
-        tmp += retXZ != 0 ? 1 : 0;
-        tmp += retZY != 0 ? 1 : 0;
+            tmp += retXZ != 0 ? 1 : 0;
+            tmp += retZY != 0 ? 1 : 0;
         ret = ret > 0 ? ret / tmp : ret;
         ret = ret < -1 ? -1 : ret;
         return ret;
@@ -391,7 +391,7 @@ public class Motion {
     //#############################################
 
     public void onDestroy() {
-        stopSensor();
+        //stopSensor();
         if (null != mIMotionListener) {
             synchronized (mIMotionListener) {
                 mIMotionListener = null;

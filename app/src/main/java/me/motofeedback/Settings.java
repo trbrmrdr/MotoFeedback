@@ -125,6 +125,50 @@ public class Settings extends BaseSettings {
 
     /* ###################################### */
 
+    private final String IS_FAST_ENABLE_MOTION = "is_fast_enable_motion";
+    private final boolean IS_FAST_ENABLE_MOTION_DEF = false;
+
+    private final String IS_DEBUG = "is_debug";
+    private final boolean IS_DEBUG_DEF = false;
+
+    private final String IS_ALARM = "is_alarm";
+    private final boolean IS_ALARM_DEF = false;
+
+    private final String LAST_SENDING_SMS_LOCATION = "last_sending_sms_location";
+
+    public boolean setFastEnableMotion(boolean val) {
+        return setSetting(IS_FAST_ENABLE_MOTION, val);
+    }
+
+    public boolean isFastEnableMotion() {
+        return getSetting(IS_FAST_ENABLE_MOTION, IS_FAST_ENABLE_MOTION_DEF);
+    }
+
+    public boolean setDebug(boolean val) {
+        return setSetting(IS_DEBUG, val);
+    }
+
+    public boolean isDebug() {
+        return getSetting(IS_DEBUG, IS_DEBUG_DEF);
+    }
+
+    public boolean setAlarm(boolean val) {
+        return setSetting(IS_ALARM, val);
+    }
+
+    public boolean isAlarm() {
+        return getSetting(IS_ALARM, IS_ALARM_DEF);
+    }
+
+    public String getLastSendingSMSLocation() {
+        return getSetting(LAST_SENDING_SMS_LOCATION, "");
+    }
+
+    public boolean setLastSendingSMSLocation(String val) {
+        return setSetting(LAST_SENDING_SMS_LOCATION, val);
+    }
+    /* ###################################### UI Setting */
+
     private int idPhoneClient;
     private int idPhoneServer;
     private int idMDCToUpdates;

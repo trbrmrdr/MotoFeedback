@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mServices.AddIMotionListener(mIMotionListener);
         mServices.AddILocationChanged(mILocationChanged);
         mServices.AddIChangeState(mIChangeState);
-        CallReceiver.findMethod(this);
+        //CallReceiver.findMethod(this);
     }
 
     @Override
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void BluetoothClick(View view) {
-        mServices.EnableBluetooth(this, mBTconnect);
+        mServices.EnableBluetooth(this, mBTconnect, false);
     }
 
     public void ClearTracing(View view) {
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void ConnectToDevice(View view) {
         //CallReceiver.call(me.motofeedback.mApplication.getSettings().getPhoneClient());
-        CallReceiver.callToPhone(this);
+        CallReceiver.callToPhone();
     }
 
     public void StartMotionListener(View view) {

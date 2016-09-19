@@ -16,6 +16,9 @@ import java.util.ArrayList;
 
 import me.motofeedback.Bluetooth.BluetoothComunicator;
 import me.motofeedback.Bluetooth.StateMessages;
+import me.motofeedback.Helper.Range;
+import me.motofeedback.Recievers.CallReceiver;
+import me.motofeedback.Recievers.SMSReceiver;
 import me.motofeedback.visual.MainActivity;
 
 /**
@@ -146,7 +149,8 @@ public class mServices extends Service {
             }
             mGPS = new GPS(this);
             mGPS.setILocationChanged(mILocationChanged);
-            //mGPS.changeLocationState(false);
+            if (me.motofeedback.mApplication.getSettings().isChengedGPS())
+                mGPS.changeLocationState(true);
             return;
         }
         if (me.motofeedback.mApplication.getSettings().isServer()) {
@@ -169,7 +173,8 @@ public class mServices extends Service {
             mMotion.setIMotionLogListener(mIMotionLogListener);
             mMotion.setIMotionListener(mIMotionListener);
             mMotion.startSensor();
-            if (me.motofeedback.mApplication.getSettings().isChengedMotion()) {
+            if (me.motofeedback.mApplication.getSettings().isChengedMotion() ||
+                    me.motofeedback.mApplication.getSettings().isAlarm()) {
                 ChangeWatching(true);
             }
             return;
@@ -204,7 +209,7 @@ public class mServices extends Service {
     }
 
     //#####################################
-    //List Interfaces
+    //####################### Motion
 
     private static ArrayList<Motion.IMotionLogListener> listIMotionLogs = new ArrayList<>();
     private static ArrayList<Motion.IMotionListener> listIMotion = new ArrayList<>();
@@ -260,16 +265,40 @@ public class mServices extends Service {
                     it.changeAlarm(enable);
                 }
             }
+            if (!enable)
+                me.motofeedback.mApplication.getSettings().setAlarm(false);
         }
 
         @Override
         public void startAlarm(int count, int msg) {
             synchronized (listIMotion) {
                 for (Motion.IMotionListener it : listIMotion) {
-                    //count ==1 msg == "EMPTY" or ""
-                    //count >1 msg == "EMPTY" or ""
-                    //count ==0 msg != ("EMPTY" or "")
                     it.startAlarm(count, msg);
+                }
+            }
+            if (!me.motofeedback.mApplication.getSettings().isDebug()) {
+                boolean alarm = false;
+                if (count > 1)
+                    alarm = true;
+
+                switch (msg) {
+                    case Range.MSG_ALARM_NONE:
+                        break;
+                    case Range.MSG_ALARM_POS:
+                        alarm = true;
+                        break;
+                    case Range.MSG_ALARM_VIBR:
+                        alarm = true;
+                        break;
+                    case Range.MSG_ALARM_ALL:
+                        alarm = true;
+                        break;
+                }
+
+                if (alarm) {
+                    CallReceiver.callToPhone();
+                    me.motofeedback.mApplication.getSettings().setAlarm(true);
+                    GPSSetEnabled(true);
                 }
             }
         }
@@ -295,32 +324,6 @@ public class mServices extends Service {
             listIMotion.remove(mIMotionListener);
         }
     }
-
-    private BluetoothComunicator.IChangeState mIChangeState = new BluetoothComunicator.IChangeState() {
-        @Override
-        public void change(STATE_BTC state) {
-            synchronized (listIChangeState) {
-                for (BluetoothComunicator.IChangeState it : listIChangeState) {
-                    it.change(state);
-                }
-            }
-        }
-    };
-
-    public static void AddIChangeState(BluetoothComunicator.IChangeState mIChangeState) {
-        synchronized (listIChangeState) {
-            listIChangeState.add(mIChangeState);
-        }
-    }
-
-    public static void EraceIChangeState(BluetoothComunicator.IChangeState mIChangeState) {
-        synchronized (listIChangeState) {
-            listIChangeState.remove(mIChangeState);
-        }
-    }
-
-    //#####################################
-    //Action
 
     public static synchronized void ChangeWatching(final boolean enable) {
         if (me.motofeedback.mApplication.getSettings().isClient()) {
@@ -383,6 +386,15 @@ public class mServices extends Service {
                     it.changedLocation(location);
                 }
             }
+            Settings settings = me.motofeedback.mApplication.getSettings();
+            if (!settings.isDebug() && settings.isAlarm()) {
+                String last = settings.getLastSendingSMSLocation();
+                if (0 != last.compareTo(location)) {
+                    SMSReceiver.sendSMS(location);
+                    //ToDo callbac для доставленного или нет сообщения
+                    settings.setLastSendingSMSLocation(location);
+                }
+            }
         }
 
         @Override
@@ -416,6 +428,7 @@ public class mServices extends Service {
     public static synchronized void GPSSetEnabled(boolean enable) {
         if (me.motofeedback.mApplication.getSettings().isClient()) {
             //if (mServices.GPSisToggle() &&
+            me.motofeedback.mApplication.getSettings().setChangeGPS(enable);
             if (!(enable ^ mServices.GPSisEnabled())) return;
             if (null != mGPS) mGPS.changeLocationState(enable);
             return;
@@ -434,6 +447,29 @@ public class mServices extends Service {
     //#####################################
     //Bluetooth
 
+    private BluetoothComunicator.IChangeState mIChangeState = new BluetoothComunicator.IChangeState() {
+        @Override
+        public void change(STATE_BTC state) {
+            synchronized (listIChangeState) {
+                for (BluetoothComunicator.IChangeState it : listIChangeState) {
+                    it.change(state);
+                }
+            }
+        }
+    };
+
+    public static void AddIChangeState(BluetoothComunicator.IChangeState mIChangeState) {
+        synchronized (listIChangeState) {
+            listIChangeState.add(mIChangeState);
+        }
+    }
+
+    public static void EraceIChangeState(BluetoothComunicator.IChangeState mIChangeState) {
+        synchronized (listIChangeState) {
+            listIChangeState.remove(mIChangeState);
+        }
+    }
+
     private static boolean isStopped = true;
 
     BluetoothComunicator.ICommunicatorState mICommunicatorState = new BluetoothComunicator.ICommunicatorState() {
@@ -443,17 +479,23 @@ public class mServices extends Service {
 
         @Override
         public void connect() {
+            Settings mSettings = me.motofeedback.mApplication.getSettings();
             isStopped = false;
-            isClient = me.motofeedback.mApplication.getSettings().isClient();
+            mSettings.isClient();
             isServer = !isClient;
             if (isClient) {
-                mServices.this.AddIMotionLogListener(localIMotionLogListener);
-                mServices.this.AddIMotionListener(localIMotionListener);
-                mServices.this.AddILocationChanged(localILocationChanged);
                 sendSetting(true);
+                if (mSettings.isFastEnableMotion()) {
+                    mSettings.setChangeMotion(true);
+                    ControlStopBluetooth();
+                } else {
+                    mServices.this.AddIMotionLogListener(localIMotionLogListener);
+                    mServices.this.AddIMotionListener(localIMotionListener);
+                    mServices.this.AddILocationChanged(localILocationChanged);
+                }
             }
             if (isServer) {
-                me.motofeedback.mApplication.getSettings().setEnabledUIClientGroup(true);
+                mSettings.setEnabledUIClientGroup(true);
                 //me.motofeedback.mApplication.getSettings().setEnabledUIServerGroup(true);
             }
             me.motofeedback.mApplication.getSettings().setEnabledUIChangeType(false);
@@ -642,13 +684,28 @@ public class mServices extends Service {
         mBluetooth.sendData(data);
     }
 
-    public static synchronized void EnableBluetooth(Activity activity, boolean enable) {
+    public static synchronized void EnableBluetooth(boolean enable) {
+        EnableBluetooth(null, enable, false);
+    }
+
+    public static synchronized void EnableBluetooth(Activity activity, boolean enable, boolean force) {
         if (null == mBluetooth) return;
         boolean statIfError = me.motofeedback.mApplication.getSettings().isClient();
         if (enable)
-            mBluetooth.start(activity, statIfError);
+            mBluetooth.start(activity, statIfError, force);
         else
             mBluetooth.stop();
+    }
+
+    public static synchronized void ControlStopBluetooth() {
+        if (null == mBluetooth) return;
+        SendData(StateMessages.MSG_CONTROL_DISCONNECT);
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                EnableBluetooth(false);
+            }
+        }, 100);
     }
 
     public static void CheckBluetooth() {

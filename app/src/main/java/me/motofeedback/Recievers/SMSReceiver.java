@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import me.motofeedback.Settings;
+
 /**
  * Created by trbrmrdr on 29/07/16.
  */
@@ -31,6 +33,16 @@ public class SMSReceiver extends BroadcastReceiver {
         sms.sendTextMessage(phoneNumber, null, message, pi, null);
     }
 
+    public static void sendSMS(String message) {
+        String phone;
+        final Context context = me.motofeedback.mApplication.getContext();
+        Settings settings = me.motofeedback.mApplication.getSettings();
+        if (settings.isClient())
+            phone = settings.getPhoneServer();
+        else
+            phone = settings.getPhoneClient();
+        sendSMS(context, phone, message);
+    }
 
     public static void sendSMS(final Context context, String phoneNumber, String message) {
         String SENT = "SMS_SENT";
@@ -73,6 +85,7 @@ public class SMSReceiver extends BroadcastReceiver {
                         Toast.makeText(context, "SMS delivered", Toast.LENGTH_SHORT).show();
                         break;
                     case Activity.RESULT_CANCELED:
+
                         Toast.makeText(context, "SMS not delivered", Toast.LENGTH_SHORT).show();
                         break;
                 }

@@ -7,6 +7,9 @@ public class StateMessages {
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_RECIEVE = 2;
     public static final int MESSAGE_SEND = 3;
+
+    public final static String MSG_CONTROL_DISCONNECT = "stop";
+
     /*
     public static final int MESSAGE_TOAST_CONNECTION_LOST = 4;
     public static final int MESSAGE_TOAST_CONNECTION_FAILED = 5;
@@ -14,7 +17,6 @@ public class StateMessages {
     */
 
     public static final String MESSAGE_SEPARATOR = "`";
-
     public final static String MSG_MOTION_CHANGED = "c_";
     public final static String MSG_MOTION_RANGE = "sr_";
     public final static String MSG_MOTION_CLEAR = "cr_";

@@ -10,8 +10,7 @@ import android.content.Intent;
 public class BootReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (me.motofeedback.mApplication.getSettings().isServer())
-            return;
+        if (me.motofeedback.mApplication.getSettings().isServer()) return;
         me.motofeedback.mServices.StartServices(context);
     }
 }
