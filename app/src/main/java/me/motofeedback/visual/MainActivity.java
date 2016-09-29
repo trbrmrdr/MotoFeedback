@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void BluetoothClick(View view) {
+        mApplication.getSettings().setFastEnableMotion(false);
         mServices.EnableBluetooth(this, mBTconnect, false);
     }
 

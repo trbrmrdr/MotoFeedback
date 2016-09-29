@@ -163,16 +163,20 @@ public class mServices extends Service {
 
     private void initMotion(boolean resstart) {
         if (me.motofeedback.mApplication.getSettings().isClient()) {
-            if (null != mMotion) {
-                if (resstart)
+            boolean isCreated = null != mMotion;
+            if (isCreated) {
+                if (resstart) {
                     mMotion.onDestroy();
-                else
-                    return;
+                    isCreated = false;
+                }
             }
-            mMotion = new Motion(this);
-            mMotion.setIMotionLogListener(mIMotionLogListener);
-            mMotion.setIMotionListener(mIMotionListener);
-            mMotion.startSensor();
+            if(!isCreated)
+            {
+                mMotion = new Motion(this);
+                mMotion.setIMotionLogListener(mIMotionLogListener);
+                mMotion.setIMotionListener(mIMotionListener);
+                mMotion.startSensor();
+            }
             if (me.motofeedback.mApplication.getSettings().isChengedMotion() ||
                     me.motofeedback.mApplication.getSettings().isAlarm()) {
                 ChangeWatching(true);
@@ -258,6 +262,8 @@ public class mServices extends Service {
     }
 
     private Motion.IMotionListener mIMotionListener = new Motion.IMotionListener() {
+
+        boolean isAlarm = false;
         @Override
         public void changeAlarm(boolean enable) {
             synchronized (listIMotion) {
@@ -267,6 +273,7 @@ public class mServices extends Service {
             }
             if (!enable)
                 me.motofeedback.mApplication.getSettings().setAlarm(false);
+            isAlarm = false;
         }
 
         @Override
@@ -276,7 +283,8 @@ public class mServices extends Service {
                     it.startAlarm(count, msg);
                 }
             }
-            if (!me.motofeedback.mApplication.getSettings().isDebug()) {
+            //if (!me.motofeedback.mApplication.getSettings().isDebug()) {
+            if(true){
                 boolean alarm = false;
                 if (count > 1)
                     alarm = true;
@@ -295,7 +303,8 @@ public class mServices extends Service {
                         break;
                 }
 
-                if (alarm) {
+                if (alarm && !isAlarm) {
+                    isAlarm = true;
                     CallReceiver.callToPhone();
                     me.motofeedback.mApplication.getSettings().setAlarm(true);
                     GPSSetEnabled(true);
@@ -366,7 +375,6 @@ public class mServices extends Service {
             new Handler(Looper.getMainLooper()).postDelayed(checkingWatching, 100);
         else
             checkingWatching.run();
-
     }
 
     public static synchronized boolean IsWatching() {
@@ -481,7 +489,7 @@ public class mServices extends Service {
         public void connect() {
             Settings mSettings = me.motofeedback.mApplication.getSettings();
             isStopped = false;
-            mSettings.isClient();
+            isClient = mSettings.isClient();
             isServer = !isClient;
             if (isClient) {
                 sendSetting(true);
