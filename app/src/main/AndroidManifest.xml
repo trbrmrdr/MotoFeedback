@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.motofeedback">
+    package="me.motofeedback" android:versionCode="1" android:versionName="1.0.0" >
 
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <application
-        android:name="me.motofeedback.mApplication"
+        android:name=".mApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -62,7 +62,7 @@
         </receiver>
 
 
-        <service android:name="me.motofeedback.mServices" />
+        <service android:name=".mServices" />
 
 
         <activity
@@ -77,13 +77,13 @@
         </activity>
 
         <activity
-            android:name="me.motofeedback.visual.SettingsActivity"
-            android:parentActivityName="me.motofeedback.visual.MainActivity"
+            android:name=".visual.SettingsActivity"
+            android:parentActivityName=".visual.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.motofeedback.visual.MainActivity" />
+                android:value=".visual.MainActivity" />
         </activity>
 
 

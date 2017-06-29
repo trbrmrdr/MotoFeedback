@@ -11,11 +11,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.util.Pair;
 
 import java.util.ArrayList;
 
 import me.motofeedback.Helper.TLog;
+import me.motofeedback.Helper.Utils;
 
 /**
  * Created by trbrm on 25.08.2016.
@@ -98,7 +100,10 @@ public class BluetoothComunicator {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (null == mBluetoothAdapter)
             throw new ExceptionInInitializerError("not finded Bluetooth module");
-        mBluetoothAdapter.setName(me.motofeedback.mApplication.getSettings().getClientName());
+        if (!mBluetoothAdapter.setName(me.motofeedback.mApplication.getSettings().getClientName())) {
+            if (Utils.canRunRootCommands())
+                mBluetoothAdapter.setName(me.motofeedback.mApplication.getSettings().getClientName());
+        }
         mChat = new Chat(mContext, mHandler);
     }
 

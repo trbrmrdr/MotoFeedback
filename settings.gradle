@@ -1,8 +1,10 @@
 include ':app'
 
+return
+
 include ':phoneApp'
 include ':phoneTestApp'
-return
+
 include ':testapplication'
 String pwd = getRootDir().absolutePath
 

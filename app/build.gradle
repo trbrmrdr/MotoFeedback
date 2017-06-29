@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.0'
+
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolVersion
 
     defaultConfig {
         applicationId "me.motofeedback"
         minSdkVersion 7
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
